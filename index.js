@@ -1,13 +1,13 @@
-window.onload = function() {
+window.onload = function () {
   // production configuration in kraken.fm
-  //const KRAKEN_API = 'https://rpc.kraken.fm';
-  //const ROOM_PARAM = 'PATH';
-  //const ICE_POLICY = 'relay';
+  const KRAKEN_API = 'https://rpc.kraken.fm';
+  const ROOM_PARAM = 'QUERY';
+  const ICE_POLICY = 'relay';
 
   // good for local development
-  const KRAKEN_API = 'http://localhost:7000';
-  const ROOM_PARAM = 'QUERY';
-  const ICE_POLICY = 'all';
+  // const KRAKEN_API = 'http://localhost:7000';
+  // const ROOM_PARAM = 'QUERY';
+  // const ICE_POLICY = 'all';
 
   /**
    *
@@ -21,16 +21,14 @@ window.onload = function() {
     _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
 
     // public method for encoding
-    , encode: function (input)
-    {
+    , encode: function (input) {
       var output = "";
       var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
       var i = 0;
 
       input = Base64._utf8_encode(input);
 
-      while (i < input.length)
-      {
+      while (i < input.length) {
         chr1 = input.charCodeAt(i++);
         chr2 = input.charCodeAt(i++);
         chr3 = input.charCodeAt(i++);
@@ -40,12 +38,10 @@ window.onload = function() {
         enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
         enc4 = chr3 & 63;
 
-        if (isNaN(chr2))
-        {
+        if (isNaN(chr2)) {
           enc3 = enc4 = 64;
         }
-        else if (isNaN(chr3))
-        {
+        else if (isNaN(chr3)) {
           enc4 = 64;
         }
 
@@ -59,16 +55,14 @@ window.onload = function() {
 
 
     // public method for decoding
-    ,decode: function (input)
-    {
+    , decode: function (input) {
       var output = "";
       var chr1, chr2, chr3;
       var enc1, enc2, enc3, enc4;
       var i = 0;
 
       input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
-      while (i < input.length)
-      {
+      while (i < input.length) {
         enc1 = this._keyStr.indexOf(input.charAt(i++));
         enc2 = this._keyStr.indexOf(input.charAt(i++));
         enc3 = this._keyStr.indexOf(input.charAt(i++));
@@ -80,13 +74,11 @@ window.onload = function() {
 
         output = output + String.fromCharCode(chr1);
 
-        if (enc3 != 64)
-        {
+        if (enc3 != 64) {
           output = output + String.fromCharCode(chr2);
         }
 
-        if (enc4 != 64)
-        {
+        if (enc4 != 64) {
           output = output + String.fromCharCode(chr3);
         }
 
@@ -99,26 +91,21 @@ window.onload = function() {
 
 
     // private method for UTF-8 encoding
-    ,_utf8_encode: function (string)
-    {
+    , _utf8_encode: function (string) {
       var utftext = "";
       string = string.replace(/\r\n/g, "\n");
 
-      for (var n = 0; n < string.length; n++)
-      {
+      for (var n = 0; n < string.length; n++) {
         var c = string.charCodeAt(n);
 
-        if (c < 128)
-        {
+        if (c < 128) {
           utftext += String.fromCharCode(c);
         }
-        else if ((c > 127) && (c < 2048))
-        {
+        else if ((c > 127) && (c < 2048)) {
           utftext += String.fromCharCode((c >> 6) | 192);
           utftext += String.fromCharCode((c & 63) | 128);
         }
-        else
-        {
+        else {
           utftext += String.fromCharCode((c >> 12) | 224);
           utftext += String.fromCharCode(((c >> 6) & 63) | 128);
           utftext += String.fromCharCode((c & 63) | 128);
@@ -130,30 +117,25 @@ window.onload = function() {
     } // End Function _utf8_encode
 
     // private method for UTF-8 decoding
-    ,_utf8_decode: function (utftext)
-    {
+    , _utf8_decode: function (utftext) {
       var string = "";
       var i = 0;
       var c, c1, c2, c3;
       c = c1 = c2 = 0;
 
-      while (i < utftext.length)
-      {
+      while (i < utftext.length) {
         c = utftext.charCodeAt(i);
 
-        if (c < 128)
-        {
+        if (c < 128) {
           string += String.fromCharCode(c);
           i++;
         }
-        else if ((c > 191) && (c < 224))
-        {
+        else if ((c > 191) && (c < 224)) {
           c2 = utftext.charCodeAt(i + 1);
           string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
           i += 2;
         }
-        else
-        {
+        else {
           c2 = utftext.charCodeAt(i + 1);
           c3 = utftext.charCodeAt(i + 2);
           string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
@@ -185,7 +167,7 @@ window.onload = function() {
     return;
   }
 
-  var name = localStorage.getItem(rname+':'+uid);
+  var name = localStorage.getItem(rname + ':' + uid);
   if (!name || name === '') {
     document.getElementById('form').style.display = 'block';
     document.getElementById('name-submit').onclick = function () {
@@ -195,7 +177,7 @@ window.onload = function() {
       } else if (val.length > 32) {
         alert('name too long, at most 32 characters');
       } else {
-        localStorage.setItem(rname+':'+uid, val);
+        localStorage.setItem(rname + ':' + uid, val);
         window.location.reload(false);
       }
     };
@@ -208,7 +190,7 @@ window.onload = function() {
 
   var ucid = "";
   var visualizers = {};
-  window.onresize = function() {
+  window.onresize = function () {
     resizeVisulizers();
   };
   function resizeVisulizers() {
@@ -277,6 +259,44 @@ window.onload = function() {
     }, 3000);
   }
 
+  async function listenStats(pc) {
+    inboundCount = 0
+    pc.getStats().then((stats) => {
+      stats.forEach((report) => {
+        if (report.type == 'inbound-rtp') {
+          inboundCount++;
+        }
+      });
+      console.log('inbound count', inboundCount);
+      inbound = inboundCount;
+    });
+
+    setTimeout(function () {
+      listenStats(pc);
+    }, 500);
+  }
+
+  listRoom();
+
+  async function listRoom() {
+    var res = await rpc('list', [rnameRPC]);
+    if (res.error && typeof res.error === 'string') {
+      console.log(res.error);
+    } else {
+      if (res.data) {
+        var data = JSON.stringify(res.data);
+        var peer = JSON.parse(data).peers;
+        console.log('list: ', [...peer]);
+
+        list = peer.length;
+      }
+    }
+
+    setTimeout(function () {
+      listRoom();
+    }, 500);
+  }
+
   start();
 
   async function start() {
@@ -294,9 +314,14 @@ window.onload = function() {
 
       var pc = new RTCPeerConnection(configuration);
 
-      pc.onicecandidate = ({candidate}) => {
+      pc.onicecandidate = ({ candidate }) => {
         rpc('trickle', [rnameRPC, unameRPC, ucid, JSON.stringify(candidate)]);
       };
+
+      pc.onconnectionstatechange = (event) => {
+        console.log('connection state changed', event.target.connectionState);
+        state = event.target.connectionState;
+      }
 
       pc.ontrack = (event) => {
         console.log("ontrack", event);
@@ -319,7 +344,7 @@ window.onload = function() {
           }
         };
 
-        var aid = 'peer-audio-'+id;
+        var aid = 'peer-audio-' + id;
         var el = document.getElementById(aid);
         if (el) {
           el.srcObject = stream;
@@ -363,6 +388,9 @@ window.onload = function() {
           subscribe(pc);
         }
       }
+
+      listenStats(pc);
+
     } catch (err) {
       console.error(err);
     }
@@ -474,7 +502,7 @@ window.onload = function() {
 
       for (var i = 0; i < bufferLength; i++) {
         point = dataArray[i];
-        barHeight = (point + 140)*2;
+        barHeight = (point + 140) * 2;
 
         var r = Math.floor(barHeight + 64);
         if (g % 3 === 0) {
@@ -489,12 +517,12 @@ window.onload = function() {
         if (barHeight < HEIGHT / MIN) {
           barHeight = HEIGHT / MIN;
         }
-        canvasCtx.fillRect(x,HEIGHT-barHeight,barWidth,barHeight);
+        canvasCtx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
 
         x += barWidth + 1;
       }
 
-      var el = document.getElementById('peer-'+id);
+      var el = document.getElementById('peer-' + id);
       if (el && el.getAttribute('data-track-id') === tid) {
         setTimeout(function () {
           requestAnimationFrame(draw);
@@ -517,7 +545,7 @@ window.onload = function() {
         },
         redirect: 'follow', // manual, *follow, error
         referrerPolicy: 'no-referrer', // no-referrer, *client
-        body: JSON.stringify({id: uuidv4(), method: method, params: params}) // body data type must match "Content-Type" header
+        body: JSON.stringify({ id: uuidv4(), method: method, params: params }) // body data type must match "Content-Type" header
       });
       return response.json(); // parses JSON response into native JavaScript objects
     } catch (err) {
@@ -527,7 +555,7 @@ window.onload = function() {
   }
 
   function uuidv4() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
       var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
       return v.toString(16);
     });
@@ -542,10 +570,10 @@ window.onload = function() {
 
   function uuidToColor(id) {
     var g = 0, b = 0;
-    for (var i = 0; i < id.length/2; i++) {
+    for (var i = 0; i < id.length / 2; i++) {
       var code = id.charCodeAt(i);
       g = g + code;
-      code = id.charCodeAt(i*2);
+      code = id.charCodeAt(i * 2);
       b = b + code;
     }
     return [g % 256, b % 256];
@@ -559,3 +587,7 @@ window.onload = function() {
   }
 
 };
+
+var list = 0;
+var inbound = 0;
+var state = "";
