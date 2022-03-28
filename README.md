@@ -6,6 +6,14 @@ Kraken is an instant audio conferencing service, no registration required.
 2. `ROOM-ID` could be anything, a simple word is good for a public room
 3. refresh home page to get a random and anonymous `ROOM-ID` each time
 
+## Simulation Test
+Run test to simulate multiple clients.
+
+```
+pip3 install -r requirements.txt
+python3 test_multi.py
+```
+
 ## Development
 
 At first, get the [kraken server code](https://github.com/MixinNetwork/kraken) and start the engine locally.
